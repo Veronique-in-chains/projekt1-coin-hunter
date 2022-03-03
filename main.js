@@ -9,24 +9,85 @@ if (!( panacekX + panacekSirka < minceX || minceX + minceSirka < panacekX || pan
 // sem začni psát svůj program
 
 
+
+//pohyb panáčka
+let panacek = document.getElementById("panacek");
+
 function stiskKlavesy(event) {
-  let sipka = event.key;
-  let panacek = document.getElementById("panacek");
   let currentTop = parseInt(window.getComputedStyle(panacek).getPropertyValue("top"));
   let currentLeft = parseInt(window.getComputedStyle(panacek).getPropertyValue("left"));
-  let step = 10;
-  if (sipka === "ArrowDown") {
-    panacek.style.top = (currentTop + step) + "px";
-    panacek.src = "obrazky/panacek.png";
-  } else if (sipka === "ArrowRight") {
-    panacek.style.left = (currentLeft + step) + "px";
-    panacek.src = "obrazky/panacek-vpravo.png";
-  } else if (sipka === "ArrowLeft") {
-    panacek.style.left = (currentLeft - step) + "px";
-    panacek.src = "obrazky/panacek-vlevo.png";
-  } else if (sipka === "ArrowUp") {
-    panacek.style.top = (currentTop - step) + "px";
-    panacek.src = "obrazky/panacek-nahoru.png";
-
+  let step = 5;
+  switch(event.key) {
+    case "ArrowDown": 
+      panacek.style.top = (currentTop + step) + "px";
+      panacek.src = "obrazky/panacek.png";
+      break;
+    case "ArrowRight":
+      panacek.style.left = (currentLeft + step) + "px";
+      panacek.src = "obrazky/panacek-vpravo.png";
+      break;
+    case "ArrowLeft":
+      panacek.style.left = (currentLeft - step) + "px";
+      panacek.src = "obrazky/panacek-vlevo.png";
+      break;
+    case "ArrowUp":
+      panacek.style.top = (currentTop - step) + "px";
+      panacek.src = "obrazky/panacek-nahoru.png";
+      break;
+  }
+// zastavení panáčka na konci okna
+  if (currentTop < 0) {
+    panacek.style.top = 0;
+  }
+  if (currentLeft < 0) {
+    panacek.style.left = 0;
+  }
+  if (currentTop > window.innerHeight - 100) {
+    panacek.style.top = (window.innerHeight - 100) + "px";
+  }
+  if (currentLeft > window.innerWidth - 100) {
+    panacek.style.left = (window.innerWidth - 100) + "px";
   }
 }
+
+//náhodné umístění mince
+let mince = document.getElementById("mince");
+
+function umisteniMince() {
+  let width = window.innerHeight;
+  let height = window.innerWidth;
+  let minceTop = Math.random() * width - 30;
+  let minceLeft = Math.random() * height - 30;
+  mince.style.left = minceLeft + "px";
+  mince.style.top = minceTop + "px";
+}
+umisteniMince();
+
+// sebrání mince
+
+function seberMinci() {
+  let currentTop = parseInt(window.getComputedStyle(panacek).getPropertyValue("top"));
+  let currentLeft = parseInt(window.getComputedStyle(panacek).getPropertyValue("left"));
+  let minceY = parseInt(window.getComputedStyle(mince).getPropertyValue("top"));
+  let minceX = parseInt(window.getComputedStyle(mince).getPropertyValue("left"));
+  let panacekSirka = parseInt(window.getComputedStyle(panacek).getPropertyValue("width"));
+  let panacekVyska = parseInt(window.getComputedStyle(panacek).getPropertyValue("height"));
+  let minceSirka = parseInt(window.getComputedStyle(mince).getPropertyValue("width"));
+  let minceVyska = parseInt(window.getComputedStyle(mince).getPropertyValue("height"));
+
+  if (!(currentLeft + panacekSirka < minceX || minceX + minceSirka < currentLeft || currentTop + panacekVyska < minceY || minceY + minceVyska < currentTop)) {
+      let score = 0;
+      score++;
+      document.getElementById("score").innerHTML = score;
+      console.log(score);
+      umisteniMince();
+  }
+}
+seberMinci()
+
+//spuštění hudby
+function spustHudbu() {
+  let audio = document.getElementById("hudba");
+  audio.play();
+}
+window.addEventListener(keydown, spustHudbu())
