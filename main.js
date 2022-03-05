@@ -85,4 +85,4 @@ function spustHudbu() {
   let audio = document.getElementById("hudba");
   audio.play();
 }
-window.addEventListener(keydown, spustHudbu())
+window.addEventListener(keydown, spustHudbu());
