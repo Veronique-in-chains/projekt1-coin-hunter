@@ -8,7 +8,18 @@ if (!( panacekX + panacekSirka < minceX || minceX + minceSirka < panacekX || pan
 
 // sem začni psát svůj program
 
+//náhodné umístění mince
+let mince = document.getElementById("mince");
 
+function umisteniMince() {
+  let width = window.innerHeight;
+  let height = window.innerWidth;
+  let minceTop = Math.random() * width - 30;
+  let minceLeft = Math.random() * height - 30;
+  mince.style.left = minceLeft + "px";
+  mince.style.top = minceTop + "px";
+}
+umisteniMince();
 
 //pohyb panáčka
 let panacek = document.getElementById("panacek");
@@ -35,6 +46,8 @@ function stiskKlavesy(event) {
       panacek.src = "obrazky/panacek-nahoru.png";
       break;
   }
+
+
 // zastavení panáčka na konci okna
   if (currentTop < 0) {
     panacek.style.top = 0;
@@ -48,26 +61,9 @@ function stiskKlavesy(event) {
   if (currentLeft > window.innerWidth - 100) {
     panacek.style.left = (window.innerWidth - 100) + "px";
   }
-}
 
-//náhodné umístění mince
-let mince = document.getElementById("mince");
 
-function umisteniMince() {
-  let width = window.innerHeight;
-  let height = window.innerWidth;
-  let minceTop = Math.random() * width - 30;
-  let minceLeft = Math.random() * height - 30;
-  mince.style.left = minceLeft + "px";
-  mince.style.top = minceTop + "px";
-}
-umisteniMince();
-
-// sebrání mince
-
-function seberMinci() {
-  let currentTop = parseInt(window.getComputedStyle(panacek).getPropertyValue("top"));
-  let currentLeft = parseInt(window.getComputedStyle(panacek).getPropertyValue("left"));
+  // sebrání mince
   let minceY = parseInt(window.getComputedStyle(mince).getPropertyValue("top"));
   let minceX = parseInt(window.getComputedStyle(mince).getPropertyValue("left"));
   let panacekSirka = parseInt(window.getComputedStyle(panacek).getPropertyValue("width"));
@@ -83,7 +79,6 @@ function seberMinci() {
       umisteniMince();
   }
 }
-seberMinci()
 
 //spuštění hudby
 function spustHudbu() {

@@ -49,4 +49,6 @@ body {
 
 #panacek {
 	z-index: 1;
+  top: 200px;
+  left: 150px;
 }
