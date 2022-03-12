@@ -47,7 +47,7 @@ alert("Vítej ve hře! Pomoz panáčkovi posbírat pět mincí! Ovládat jej mů
 
 
 function stiskKlavesy(event) {
-  //spustHudbu();
+  spustHudbu();
   currentTop = parseInt(window.getComputedStyle(panacek).getPropertyValue("top"));
   currentLeft = parseInt(window.getComputedStyle(panacek).getPropertyValue("left"));
   step = 10;
